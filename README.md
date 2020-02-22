@@ -1,1 +1,2 @@
 # RABKOM
+printf("RABKOM");
