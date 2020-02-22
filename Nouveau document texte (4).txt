@@ -1,0 +1,46 @@
+#ifndef FONCTIONS_H_ 
+#define FONCTIONS_H_ 
+SDL_Event event;//bb
+SDL_Surface *screen =NULL ;
+SDL_Surface *belehi =NULL ;
+SDL_Surface *image =NULL ;
+SDL_Surface *police =NULL ;
+SDL_Surface *police1 =NULL ;
+
+SDL_Surface *texte = NULL;
+SDL_Surface *balle =NULL ;
+Uint32 bougerZozor(Uint32 intervalle, void *parametre);
+SDL_Surface *settings =NULL ;
+SDL_Surface *back =NULL ;
+SDL_Surface *man;
+SDL_Surface *personage = NULL;//
+SDL_Surface *menu=NULL;
+
+SDL_Surface *vol=NULL;
+SDL_Surface *icon=NULL;
+SDL_Surface *blood=NULL;
+SDL_Rect positionecran;
+SDL_Rect positionBlood;
+SDL_Rect positionCart;
+SDL_Rect positionVol;
+SDL_Rect positionPolice;
+SDL_Rect  positionMan;
+
+
+    SDL_Rect position;
+
+
+Mix_Music *musique;
+Mix_Music *musique_S;
+   
+
+  SDL_Rect positionperso;
+
+
+
+
+
+
+
+
+#endif

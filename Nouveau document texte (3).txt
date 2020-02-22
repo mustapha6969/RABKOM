@@ -1,0 +1,401 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<SDL/SDL.h>
+#include<SDL/SDL_image.h>
+#include<SDL/SDL_mixer.h>
+#include <SDL/SDL_ttf.h>
+#include "fonctions.h"
+int main(void){
+int done=1;
+int continuer;
+
+
+
+if(done==1){
+int tempsPrecedent = 0, tempsActuel = 0;
+
+
+SDL_Init(SDL_INIT_EVERYTHING);
+
+SDL_WM_SetCaption("EL CHAPO",NULL);
+char pause;
+
+if(SDL_Init(SDL_INIT_VIDEO)!=0){
+  printf("Unable to initialize SDL :%s \n",SDL_GetError());
+return(-1);}
+SDL_WM_SetIcon(IMG_Load("icon"), NULL);
+screen=SDL_SetVideoMode(820,396,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
+SDL_WM_SetCaption("EL CHAPO",NULL);
+if(screen == NULL){
+printf("unable to set video mode :%s \n",SDL_GetError());
+return 1;}
+
+
+
+
+
+   
+ positionPolice.x=0;
+  positionPolice.y=0;
+ positionCart.x=344;
+ positionCart.y=95;
+ positionMan.x=100;
+ positionMan.y=0;
+
+positionBlood.x=0;
+ positionBlood.y=50;
+
+positionVol.x=155;
+ positionVol.y=130;
+
+
+
+
+
+
+
+
+
+     vol =  IMG_Load("vol");
+      man =  IMG_Load("man");
+   balle =  IMG_Load("cartoucha");
+  image = IMG_Load("menu");
+   police = IMG_Load("police");
+		personage = IMG_Load("ELCHAPITO");//PERSONNAGE 
+		back = IMG_Load("BACKGROUNDGAME"); //IMAGE DU MAP
+               settings = IMG_Load("PARAMETRES"); 
+                 
+  /*if(image == NULL){
+printf("unable to load bitmap :%s \n",SDL_GetError());
+return 1;}*/
+
+  positionecran.x=0;
+  positionecran.y=0;
+  positionecran.w=image->w;
+
+  positionperso.x=200;//
+  positionperso.y=200;//
+/*image->w=1600;
+image->h=400;*/
+SDL_EnableKeyRepeat(20,20);//bb
+     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+   {
+      printf("%s", Mix_GetError());
+   }
+                                                                             musique = Mix_LoadMUS("musique"); //Chargement de la musique
+   Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
+if (musique == NULL) {
+printf("Music could not be loaded:%s\n",Mix_GetError());
+}
+
+while (done){
+
+
+
+SDL_PollEvent(&event);
+switch (event.type){
+case SDL_MOUSEMOTION: //DETECTER L EMPLACEMENT DU CURSEUR DE LA SOURIS
+ 
+          
+            if ((event.motion.x >= 385) && (event.motion.x < 438) && (event.motion.y >= 294) && (event.motion.y < 351)) //SURFACE DU BOUTTON PLAY
+
+            {
+ 
+                image=IMG_Load("PLAYSELECTIONNE"); //MISE A JOUR DU BOUTTON
+
+                        Mix_Music *musique_S;
+                        musique_S=Mix_LoadMUS("musiqueSELECTIONNE.mp3"); //SON BREF QUAND LE CURSEUR EST DANS LA SURFACE DU BOUTTON
+
+                
+            }
+
+
+else if ((event.motion.x >= 460) && (event.motion.x < 512) && (event.motion.y >= 300) && (event.motion.y < 350)) //SURFACE DU BOUTTON SETTINGS
+            {
+ 
+                image=IMG_Load("SETTINGSSELECTIONNE"); //MISE A JOUR DU BOUTTON
+
+                
+
+                Mix_Music *musique_S;
+                        musique_S=Mix_LoadMUS("musiqueSELECTIONNE.mp3"); //SON BREF QUAND LE CURSEUR EST DANS LA SURFACE DU BOUTTON
+            }   
+
+ else if ((event.motion.x >= 312) && (event.motion.x < 361) && (event.motion.y >= 299) && (event.motion.y < 352)) //SURFACE DU BOUTTON EXIT
+            {
+ 
+
+                image=IMG_Load("EXITSELECTIONNE");//MISE A JOUR DU BOUTTON  
+
+
+
+                Mix_Music *musique_S;
+                        musique_S=Mix_LoadMUS("musiqueSELECTIONNE.mp3"); //SON BREF QUAND LE CURSEUR EST DANS LA SURFACE DU BOUTTON
+                
+            }
+
+
+
+else
+{image=IMG_Load("menu"); //UPDATE MENU
+}
+break;
+
+
+case SDL_MOUSEBUTTONUP: //DETECTER LE CLIQUE DE LA SOURIS
+            if ((event.button.x >= 385) && (event.button.x < 438) && (event.button.y >= 294) && (event.button.y < 351))  {
+done=2 ;
+while(done==2){
+
+    SDL_WaitEvent(&event);
+    	switch (event.type){
+
+case SDL_QUIT:
+   done=0;
+break;
+
+
+case SDL_KEYDOWN:
+
+       switch(event.key.keysym.sym){
+              case SDLK_ESCAPE: 
+
+
+done=1;
+            break;                 }
+       
+break;                       }
+
+
+                belehi=SDL_SetVideoMode(820,396,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
+SDL_WM_SetCaption("MODE PLAY IN PROGRESS.... ??",NULL);//NOM DE LA FENETRE
+	///////	image = IMG_Load("BACKGROUNDGAME"); //IMAGE DU MAP
+		//personage = IMG_Load("ELCHAPITO");//PERSONNAGE 
+
+  SDL_BlitSurface(personage,NULL,back,&positionperso);//affichage du personnage  
+  SDL_BlitSurface(back,NULL,belehi,&positionecran);//affichage du personnage  
+SDL_Flip(belehi);//rafraichissement
+
+}  
+SDL_FreeSurface(personage);//LIBERATION DE LA SURFACE PERSONNAGE
+SDL_FreeSurface(back);//LIBERATION DE LA SURFACE PERSONNAGE
+
+
+}
+
+
+
+
+else if ((event.button.x >= 312) && (event.button.x <361 ) && (event.button.y >=299 ) && (event.button.y < 352))   
+		
+            {
+                done=0;}
+
+       else if ((event.button.x >= 460) && (event.button.x < 512) && (event.button.y >= 300) && (event.button.y < 350))   
+		
+            { done=3 ;
+while(done==3){
+
+    SDL_WaitEvent(&event);
+    	switch (event.type){
+
+
+case SDL_QUIT:
+   done=0;
+break;
+
+
+case SDL_KEYDOWN:
+
+       switch(event.key.keysym.sym){
+              case SDLK_ESCAPE: 
+
+
+
+done=1;
+            break; 
+}
+break;      
+
+  /*Uint8 volume = 0;
+    Mix_VolumeMusic(volume);
+
+            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_p)
+                Mix_PauseMusic(); // Mets en pause la musique 
+            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r)
+                Mix_ResumeMusic(); // Reprend la lecture 
+            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_s)
+                Mix_RewindMusic(); // Revient au début de la musique
+            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP && volume < MIX_MAX_VOLUME)
+                volume++; // Augmente le volume jusqu'a MIX_MAX_VOLUME
+            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN && volume > 0)
+                volume--; // Réduit le volume jusqu'a 0
+            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
+                Mix_HaltMusic(); // Arreter la musique
+
+            if (event.type == SDL_KEYDOWN)
+                Mix_VolumeMusic(volume); // Applique le volume desirer */
+
+
+
+                     }
+
+    /* SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
+        SDL_RenderClear(pRenderer);
+        SDL_RenderPresent(pRenderer);*/
+                screen=SDL_SetVideoMode(820,396,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
+                SDL_WM_SetCaption("SETTINGS",NULL);//NOM DE LA FENETRE
+	
+  SDL_BlitSurface(settings,NULL,screen,&positionecran); 
+// SDL_BlitSurface(vol,NULL,settings,&positionVol); 
+
+SDL_Flip(screen);//rafraichissement
+SDL_Flip(settings);//rafraichissement
+
+
+
+}  
+/*SDL_DestroyRenderer(pRenderer);
+    SDL_DestroyWindow(pWindow); */
+SDL_FreeSurface(settings);//LIBERATION DE LA SURFACE PERSONNAGE
+SDL_FreeSurface(screen);//LIBERATION DE LA SURFACE PERSONNAGE
+SDL_FreeSurface(vol);//LIBERATION DE LA SURFACE PERSONNAGE
+
+
+}
+
+
+            break;
+
+
+
+  case SDL_QUIT:
+      done =0;
+     break;
+
+case SDL_KEYDOWN:
+ switch (event.key.keysym.sym){
+  case SDLK_UP: 
+SDL_FreeSurface(vol);//LIBERATION DE LA SURFACE PERSONNAGE
+break;
+
+ case SDLK_RIGHT: 
+                image=IMG_Load("SETTINGSSELECTIONNE"); //MISE A JOUR DU BOUTTON
+break;
+
+
+ case SDLK_LEFT:
+                image=IMG_Load("EXITSELECTIONNE"); //MISE A JOUR DU BOUTTON
+break;
+
+/*case SDLK_SPACE:
+      done =0;
+ SDL_Quit();
+break; */
+
+
+}
+break;
+
+
+
+
+
+
+/*case SDL_KEYDOWN:
+ switch (event.key.keysym.sym){
+  case SDLK_UP: //fleche haut
+    positionperso.y-=3;
+   SDL_WaitEvent(&event);//bloque la repstition du SDL_PollEvent
+SDL_BlitSurface(personage,NULL,screen,&positionperso);
+  break;
+  case SDLK_DOWN: //fleche bas
+    positionperso.y+=3;
+   SDL_WaitEvent(&event);
+SDL_BlitSurface(personage,NULL,screen,&positionperso);
+  break;
+  case SDLK_RIGHT: //fleche droite
+    positionperso.x+=5;
+    SDL_WaitEvent(&event);
+SDL_BlitSurface(personage,NULL,screen,&positionperso);
+  break;
+  case SDLK_LEFT: //fleche gauche
+    positionperso.x-=5;
+    SDL_WaitEvent(&event);
+SDL_BlitSurface(personage,NULL,screen,&positionperso);
+  break;
+ 
+}
+  break; */
+
+} 
+        tempsActuel = SDL_GetTicks();
+
+     if (tempsActuel - tempsPrecedent > 30) /* Si 30 ms se sont écoulées depuis le dernier tour de boucle */
+
+
+       {
+
+           positionCart.x=positionCart.x-2;
+             
+     if( (positionCart.x >115) && (positionCart.x < 120)  )
+
+   
+      image = IMG_Load("blood");
+
+
+     else if (positionCart.x==114)
+     positionCart.x=344; 
+
+
+
+
+       tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
+
+       } 
+
+
+
+
+
+
+
+
+
+
+SDL_WM_SetCaption("EL CHAPO",NULL);
+
+  SDL_BlitSurface(vol,NULL,screen,&positionVol);//affichage du background
+
+ SDL_BlitSurface(blood,NULL,police,&positionBlood);//affichage du background
+  SDL_BlitSurface(image,NULL,screen,&positionecran);//affichage du background
+  SDL_BlitSurface(balle,NULL,screen,&positionCart);//affichage du background
+  SDL_BlitSurface(man,NULL,screen,&positionMan);//affichage du background
+  SDL_BlitSurface(police,NULL,screen,&positionPolice);//affichage du background
+ // SDL_BlitSurface(personage,NULL,screen,&positionperso);//affichage du personnage  
+SDL_Flip(screen);
+SDL_Flip(police);
+
+
+
+}//rafraichissement
+
+ SDL_FreeSurface(image);//LIBERATION DE LA SURFACE IMAGE
+ SDL_FreeSurface(police);//LIBERATION DE LA SURFACE IMAGE
+
+
+
+
+
+
+
+
+// SDL_FreeSurface(blood);//LIBERATION DE LA SURFACE IMAGE
+
+ //SDL_FreeSurface(police);//LIBERATION DE LA SURFACE IMAGE
+
+ //SDL_FreeSurface(personage);//LIBERATION DE LA SURFACE PERSONNAGE
+//pause =getchar();
+  SDL_Quit(); //Arret de la SDL
+
+return 0;
